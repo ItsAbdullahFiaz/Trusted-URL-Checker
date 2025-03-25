@@ -3,6 +3,7 @@ from pydantic import BaseModel
 import csv
 from typing import Set
 import time
+import os
 
 app = FastAPI(title="Trusted URL Checker API")
 
@@ -19,7 +20,11 @@ async def startup_event():
     start_time = time.time()
     
     try:
-        with open("tranco_YX9YG.csv", "r") as file:
+        # Get the absolute path to the CSV file
+        current_dir = os.path.dirname(os.path.abspath(__file__))
+        csv_path = os.path.join(current_dir, "tranco_YX9YG.csv")
+        
+        with open(csv_path, "r") as file:
             csv_reader = csv.reader(file)
             for row in csv_reader:
                 if len(row) >= 2:  # Ensure row has at least 2 elements
